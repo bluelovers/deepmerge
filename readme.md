@@ -18,7 +18,7 @@ var merge = require('./')
 
 ```js
 var x = {
-	foo: { bar: 3 },
+	foo: { bar: 5 },
 	array: [{
 		does: 'work',
 		too: [ 1, 2, 3 ]
@@ -38,7 +38,7 @@ var y = {
 
 var expected = {
 	foo: {
-		bar: 3,
+		bar: 5,
 		baz: 4
 	},
 	array: [{
