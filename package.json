@@ -1,6 +1,6 @@
 {
   "name": "deepmerge-plus",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A library for deep (recursive) merging of Javascript objects",
   "keywords": [
     "clone",
@@ -27,7 +27,9 @@
   },
   "scripts": {
     "build": "npx rollup -c",
-    "test": "npm run build && tap test/*.js && npx jsmd readme.md"
+    "jsmd": "npx jsmd readme.md",
+    "tap-test": "tap test/*.js",
+    "test": "npm run build && npm run tap-test && npm run jsmd"
   },
   "dependencies": {},
   "devDependencies": {

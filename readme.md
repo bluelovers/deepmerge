@@ -17,6 +17,37 @@ var merge = require('./')
 -->
 
 ```js
+	var moment = require('moment')
+
+	var monday = moment('2016-09-27T01:08:12.761Z')
+	var tuesday = moment('2016-09-28T01:18:12.761Z')
+
+	var target = {
+		date: monday
+	}
+	var source = {
+		date: tuesday
+	}
+
+	let options = {
+		isMergeableObject(value, isMergeableObject) {
+			let bool;
+
+			if (bool = moment.isMoment(value)) {
+				return false;
+			}
+
+			return isMergeableObject(value)
+		}
+	}
+
+	var expected = {
+		date: tuesday
+	}
+	var actual = merge(target, source, options) // => expected
+```
+
+```js
 var x = {
 	foo: { bar: 5 },
 	array: [{
