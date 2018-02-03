@@ -1,9 +1,9 @@
-deepmerge
-=========
+deepmerge-plus
+==============
 
-> ~554B gzipped, ~1.10KiB minified
+> Merge the enumerable attributes of two objects deeply.
 
-Merge the enumerable attributes of two objects deeply.
+`npm install deepmerge-plus`
 
 [***Check out the changes from version 1.x to 2.0.0***](https://github.com/KyleAMathews/deepmerge/blob/master/changelog.md#200)
 
