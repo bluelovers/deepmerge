@@ -7,14 +7,12 @@ function emptyTarget(val)
 
 function cloneUnlessOtherwiseSpecified(value, optionsArgument, key?)
 {
-	let clone = !optionsArgument || optionsArgument.clone !== false
+	let clone = !optionsArgument || optionsArgument.clone !== false;
 
 	return (clone && _isMergeableObject(value, optionsArgument, key))
 		? deepmerge(emptyTarget(value), value, optionsArgument)
 		: value
 }
-
-
 
 function _isMergeableObject(value, optionsArgument, key?)
 {
@@ -40,7 +38,7 @@ function defaultArrayMerge(target, source, optionsArgument)
 
 function mergeObject(target, source, optionsArgument)
 {
-	let destination = {}
+	let destination = {};
 	if (_isMergeableObject(target, optionsArgument))
 	{
 		Object.keys(target).forEach(function (key)
@@ -58,44 +56,48 @@ function mergeObject(target, source, optionsArgument)
 		{
 			destination[key] = deepmerge(target[key], source[key], optionsArgument)
 		}
-	})
+	});
 	return destination
 }
-
 
 function deepmerge<T>(x: Partial<T>, y: Partial<T>, options?: deepmerge.Options): T
 function deepmerge<T1, T2>(x: T1, y: T2, options?: deepmerge.Options): T1 & T2
 function deepmerge(target, source, optionsArgument)
 {
-	let sourceIsArray = Array.isArray(source)
-	let targetIsArray = Array.isArray(target)
-	let options = optionsArgument || { arrayMerge: defaultArrayMerge }
-	let sourceAndTargetTypesMatch = sourceIsArray === targetIsArray
+	let sourceIsArray = Array.isArray(source);
+	let targetIsArray = Array.isArray(target);
+	let options = optionsArgument || { arrayMerge: defaultArrayMerge };
+	let sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
 
 	if (!sourceAndTargetTypesMatch)
 	{
-		return cloneUnlessOtherwiseSpecified(source, optionsArgument)
+		return cloneUnlessOtherwiseSpecified(source, optionsArgument);
 	}
 	else if (sourceIsArray)
 	{
-		let arrayMerge = options.arrayMerge || defaultArrayMerge
-		return arrayMerge(target, source, optionsArgument)
+		let arrayMerge = options.arrayMerge || defaultArrayMerge;
+		return arrayMerge(target, source, optionsArgument);
 	}
 	else
 	{
-		return mergeObject(target, source, optionsArgument)
+		return mergeObject(target, source, optionsArgument);
 	}
 }
 
 namespace deepmerge
 {
-	export interface Options {
+	export interface Options
+	{
 		clone?: boolean;
+
 		arrayMerge?(destination: any[], source: any[], options?: Options): any[];
 
 		isMergeableObject?(value, optionsArgument?: Options, key?): void;
+
 		isMergeableObject?(value, optionsArgument?: Options, key?): boolean;
 	}
+
+	export const isMergeable = isMergeableObject;
 
 	export const all = function deepmergeAll<T>(array: Array<Partial<T>>, optionsArgument?: Options): T
 	{
@@ -114,9 +116,12 @@ namespace deepmerge
 
 export = deepmerge
 
-declare global {
-	interface Window {
+declare global
+{
+	interface Window
+	{
 		deepmerge<T>(x: Partial<T>, y: Partial<T>, options?: deepmerge.Options): T;
+
 		deepmerge<T1, T2>(x: T1, y: T2, options?: deepmerge.Options): T1 & T2;
 	}
 }

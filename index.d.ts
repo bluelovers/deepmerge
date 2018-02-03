@@ -7,6 +7,7 @@ declare namespace deepmerge {
         isMergeableObject?(value: any, optionsArgument?: Options, key?: any): void;
         isMergeableObject?(value: any, optionsArgument?: Options, key?: any): boolean;
     }
+    const isMergeable: any;
     const all: <T>(array: Partial<T>[], optionsArgument?: Options) => T;
 }
 export = deepmerge;
