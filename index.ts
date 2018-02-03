@@ -5,7 +5,7 @@ function emptyTarget(val)
 	return Array.isArray(val) ? [] : {}
 }
 
-function cloneUnlessOtherwiseSpecified(value, optionsArgument, key?)
+function cloneUnlessOtherwiseSpecified(value, optionsArgument: deepmerge.Options, key?)
 {
 	let clone = !optionsArgument || optionsArgument.clone !== false;
 
@@ -14,7 +14,7 @@ function cloneUnlessOtherwiseSpecified(value, optionsArgument, key?)
 		: value
 }
 
-function _isMergeableObject(value, optionsArgument, key?)
+function _isMergeableObject(value, optionsArgument: deepmerge.Options, key?)
 {
 	let ret;
 	if (optionsArgument && optionsArgument.isMergeableObject)
@@ -28,7 +28,7 @@ function _isMergeableObject(value, optionsArgument, key?)
 	return ret
 }
 
-function defaultArrayMerge(target, source, optionsArgument)
+function defaultArrayMerge(target, source, optionsArgument: deepmerge.Options)
 {
 	return target.concat(source).map(function (element, index)
 	{
@@ -36,7 +36,7 @@ function defaultArrayMerge(target, source, optionsArgument)
 	})
 }
 
-function mergeObject(target, source, optionsArgument)
+function mergeObject(target, source, optionsArgument: deepmerge.Options)
 {
 	let destination = {};
 	if (_isMergeableObject(target, optionsArgument))
