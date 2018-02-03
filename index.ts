@@ -19,7 +19,7 @@ function _isMergeableObject(value, optionsArgument: deepmerge.Options, key?)
 	let ret;
 	if (optionsArgument && optionsArgument.isMergeableObject)
 	{
-		ret = optionsArgument.isMergeableObject(value, optionsArgument, key)
+		ret = optionsArgument.isMergeableObject(value, isMergeableObject, optionsArgument, key)
 	}
 	if (ret === null || typeof ret === 'undefined')
 	{
@@ -92,12 +92,12 @@ namespace deepmerge
 
 		arrayMerge?(destination: any[], source: any[], options?: Options): any[];
 
-		isMergeableObject?(value, optionsArgument?: Options, key?): void;
+		isMergeableObject?(value, isMergeableObject: (value) => boolean, optionsArgument?: Options, key?): void;
 
-		isMergeableObject?(value, optionsArgument?: Options, key?): boolean;
+		isMergeableObject?(value, isMergeableObject: (value) => boolean, optionsArgument?: Options, key?): boolean;
 	}
 
-	export const isMergeable = isMergeableObject;
+	export const isMergeable: (value) => boolean = isMergeableObject;
 
 	export const all = function deepmergeAll<T>(array: Array<Partial<T>>, optionsArgument?: Options): T
 	{

@@ -4,10 +4,10 @@ declare namespace deepmerge {
     interface Options {
         clone?: boolean;
         arrayMerge?(destination: any[], source: any[], options?: Options): any[];
-        isMergeableObject?(value: any, optionsArgument?: Options, key?: any): void;
-        isMergeableObject?(value: any, optionsArgument?: Options, key?: any): boolean;
+        isMergeableObject?(value: any, isMergeableObject: (value) => boolean, optionsArgument?: Options, key?: any): void;
+        isMergeableObject?(value: any, isMergeableObject: (value) => boolean, optionsArgument?: Options, key?: any): boolean;
     }
-    const isMergeable: any;
+    const isMergeable: (value) => boolean;
     const all: <T>(array: Partial<T>[], optionsArgument?: Options) => T;
 }
 export = deepmerge;
