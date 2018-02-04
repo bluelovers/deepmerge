@@ -9,7 +9,7 @@ function cloneUnlessOtherwiseSpecified(value, optionsArgument, tmp) {
     let ret = (bool)
         ? deepmerge(emptyTarget(value), value, optionsArgument)
         : value;
-    if (optionsArgument.keyValueOrMode && !bool && tmp && ('key' in tmp)) {
+    if (optionsArgument && optionsArgument.keyValueOrMode && !bool && tmp && ('key' in tmp)) {
         if (tmp.destination) {
             ret = tmp.destination[tmp.key] || ret;
         }

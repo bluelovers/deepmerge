@@ -15,7 +15,7 @@ function cloneUnlessOtherwiseSpecified(value, optionsArgument: deepmerge.Options
 		? deepmerge(emptyTarget(value), value, optionsArgument)
 		: value;
 
-	if (optionsArgument.keyValueOrMode && !bool && tmp && ('key' in tmp))
+	if (optionsArgument && optionsArgument.keyValueOrMode && !bool && tmp && ('key' in tmp))
 	{
 		if (tmp.destination)
 		{
