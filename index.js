@@ -3,37 +3,70 @@ const isMergeableObject = require("is-mergeable-object");
 function emptyTarget(val) {
     return Array.isArray(val) ? [] : {};
 }
-function cloneUnlessOtherwiseSpecified(value, optionsArgument, key) {
+function cloneUnlessOtherwiseSpecified(value, optionsArgument, tmp) {
     let clone = !optionsArgument || optionsArgument.clone !== false;
-    return (clone && _isMergeableObject(value, optionsArgument, key))
+    let bool = clone && _isMergeableObject(value, optionsArgument, tmp);
+    let ret = (bool)
         ? deepmerge(emptyTarget(value), value, optionsArgument)
         : value;
+    if (optionsArgument.keyValueOrMode && !bool && tmp && ('key' in tmp)) {
+        if (tmp.destination) {
+            ret = tmp.destination[tmp.key] || ret;
+        }
+        if (tmp.target) {
+            ret = tmp.target[tmp.key] || ret;
+        }
+        if (tmp.source) {
+            ret = tmp.source[tmp.key] || ret;
+        }
+    }
+    return ret;
 }
-function _isMergeableObject(value, optionsArgument, key) {
+function _isMergeableObject(value, optionsArgument, tmp) {
     let ret;
     if (optionsArgument && optionsArgument.isMergeableObject) {
-        ret = optionsArgument.isMergeableObject(value, isMergeableObject, optionsArgument, key);
+        ret = optionsArgument.isMergeableObject(value, isMergeableObject, optionsArgument, tmp);
     }
     if (ret === null || typeof ret === 'undefined') {
-        ret = isMergeableObject(value);
+        if (value && (typeof value[deepmerge.SYMBOL_IS_MERGEABLE] == 'boolean')) {
+            ret = value[deepmerge.SYMBOL_IS_MERGEABLE];
+        }
+        else {
+            ret = isMergeableObject(value);
+        }
     }
     return ret;
 }
 function defaultArrayMerge(target, source, optionsArgument) {
-    return target.concat(source).map(function (element, index) {
-        return cloneUnlessOtherwiseSpecified(element, optionsArgument, index);
+    return target.concat(source).map(function (element, index, array) {
+        return cloneUnlessOtherwiseSpecified(element, optionsArgument, {
+            key: index,
+        });
     });
 }
 function mergeObject(target, source, optionsArgument) {
     let destination = {};
     if (_isMergeableObject(target, optionsArgument)) {
         Object.keys(target).forEach(function (key) {
-            destination[key] = cloneUnlessOtherwiseSpecified(target[key], optionsArgument, key);
+            destination[key] = cloneUnlessOtherwiseSpecified(target[key], optionsArgument, {
+                key,
+                source,
+                target,
+                destination,
+            });
         });
     }
     Object.keys(source).forEach(function (key) {
-        if (!_isMergeableObject(source[key], optionsArgument, key) || !target[key]) {
-            destination[key] = cloneUnlessOtherwiseSpecified(source[key], optionsArgument, key);
+        if (!_isMergeableObject(source[key], optionsArgument, {
+            key,
+            source,
+            target,
+        }) || !target[key]) {
+            destination[key] = cloneUnlessOtherwiseSpecified(source[key], optionsArgument, {
+                key,
+                source,
+                target,
+            });
         }
         else {
             destination[key] = deepmerge(target[key], source[key], optionsArgument);
@@ -47,7 +80,10 @@ function deepmerge(target, source, optionsArgument) {
     let options = optionsArgument || { arrayMerge: defaultArrayMerge };
     let sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
     if (!sourceAndTargetTypesMatch) {
-        return cloneUnlessOtherwiseSpecified(source, optionsArgument);
+        return cloneUnlessOtherwiseSpecified(source, optionsArgument, {
+            target,
+            source,
+        });
     }
     else if (sourceIsArray) {
         let arrayMerge = options.arrayMerge || defaultArrayMerge;
@@ -59,6 +95,7 @@ function deepmerge(target, source, optionsArgument) {
 }
 (function (deepmerge) {
     deepmerge.isMergeable = isMergeableObject;
+    deepmerge.SYMBOL_IS_MERGEABLE = Symbol.for('SYMBOL_IS_MERGEABLE');
     deepmerge.all = function deepmergeAll(array, optionsArgument) {
         if (!Array.isArray(array)) {
             throw new Error('first argument should be an array');
