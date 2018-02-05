@@ -32,15 +32,15 @@
     "build": "npx rollup -c",
     "jsmd": "npx jsmd readme.md",
     "tap-test": "tap test/*.tap.js",
-    "test": "npm run build && npm run tap-test && npm run jsmd"
+    "mocha-test": "npx mocha --require ts-node/register \"!(node_modules)/**/*.{test,spec}.{ts,tsx}\"",
+    "test": "npm run build && npm run mocha-test && npm run jsmd"
   },
   "dependencies": {},
   "devDependencies": {
     "is-mergeable-object": "1.1.0",
     "moment": "^2.20.1",
     "rollup-plugin-commonjs": "8.2.1",
-    "rollup-plugin-node-resolve": "3.0.0",
-    "tap": "~7.1.2"
+    "rollup-plugin-node-resolve": "3.0.0"
   },
   "engines": {
     "node": ">=0.10.0"

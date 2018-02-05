@@ -1,5 +1,5 @@
-declare function deepmerge<T>(x: Partial<T>, y: Partial<T>, options?: deepmerge.Options): T;
-declare function deepmerge<T1, T2>(x: T1, y: T2, options?: deepmerge.Options): T1 & T2;
+declare function deepmerge<T1, T2>(x: T1, y: T2, options?: deepmerge.Options): Partial<T1 & T2>;
+declare function deepmerge<T>(x: Partial<T>, y: Partial<T>, options?: deepmerge.Options): Partial<T>;
 declare namespace deepmerge {
     interface ICache {
         key?: any;
@@ -16,7 +16,7 @@ declare namespace deepmerge {
     }
     const isMergeable: (value) => boolean;
     const SYMBOL_IS_MERGEABLE: symbol;
-    const all: <T>(array: Partial<T>[], optionsArgument?: Options) => T;
+    const all: <T, T2 = any>(array: Partial<T2 & T>[], optionsArgument?: Options) => T2 & T;
 }
 export = deepmerge;
 declare global  {

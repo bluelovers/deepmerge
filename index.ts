@@ -107,8 +107,8 @@ function mergeObject(target, source, optionsArgument: deepmerge.Options)
 	return destination
 }
 
-function deepmerge<T>(x: Partial<T>, y: Partial<T>, options?: deepmerge.Options): T
-function deepmerge<T1, T2>(x: T1, y: T2, options?: deepmerge.Options): T1 & T2
+function deepmerge<T1, T2>(x: T1, y: T2, options?: deepmerge.Options): Partial<T1 & T2>
+function deepmerge<T>(x: Partial<T>, y: Partial<T>, options?: deepmerge.Options): Partial<T>
 function deepmerge(target, source, optionsArgument)
 {
 	let sourceIsArray = Array.isArray(source);
@@ -163,8 +163,8 @@ namespace deepmerge
 	export const isMergeable: (value) => boolean = isMergeableObject;
 	export const SYMBOL_IS_MERGEABLE = Symbol.for('SYMBOL_IS_MERGEABLE');
 
-	export const all = function deepmergeAll<T>(array: Array<Partial<T>>, optionsArgument?: Options): T
-	{
+	export const all = function deepmergeAll<T, T2 = any>(array: Array<Partial<T2 & T>>, optionsArgument?: Options): T2 & T
+		{
 		if (!Array.isArray(array))
 		{
 			throw new Error('first argument should be an array')
