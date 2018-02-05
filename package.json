@@ -3,19 +3,23 @@
   "version": "2.1.0",
   "description": "A library for deep (recursive) merging of Javascript objects",
   "keywords": [
+    "and",
     "clone",
     "copy",
     "deep",
     "extend",
     "merge",
     "or",
-    "and",
     "overwrite",
     "recursive"
   ],
   "homepage": "https://github.com/bluelovers/deepmerge#readme",
   "bugs": {
     "url": "https://github.com/bluelovers/deepmerge/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluelovers/deepmerge.git"
   },
   "license": "MIT",
   "author": "Nick Fisher",
@@ -24,15 +28,11 @@
   "directories": {
     "test": "test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bluelovers/deepmerge.git"
-  },
   "scripts": {
     "build": "npx rollup -c",
     "jsmd": "npx jsmd readme.md",
-    "tap-test": "tap test/*.tap.js",
     "mocha-test": "npx mocha --require ts-node/register \"!(node_modules)/**/*.{test,spec}.{ts,tsx}\"",
+    "tap-test": "tap test/*.tap.js",
     "test": "npm run build && npm run mocha-test && npm run jsmd"
   },
   "dependencies": {},
