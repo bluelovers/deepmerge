@@ -1,6 +1,6 @@
 {
   "name": "deepmerge-plus",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A library for deep (recursive) merging of Javascript objects",
   "keywords": [
     "and",
@@ -24,7 +24,7 @@
   "license": "MIT",
   "author": "Nick Fisher",
   "main": "dist/umd.js",
-  "module": "dist/es.js",
+  "module": "index.js",
   "directories": {
     "test": "test"
   },
@@ -35,9 +35,10 @@
     "tap-test": "tap test/*.tap.js",
     "test": "npm run build && npm run mocha-test && npm run jsmd"
   },
-  "dependencies": {},
+  "dependencies": {
+    "is-mergeable-object": "1.1.0"
+  },
   "devDependencies": {
-    "is-mergeable-object": "1.1.0",
     "moment": "^2.20.1",
     "rollup-plugin-commonjs": "8.2.1",
     "rollup-plugin-node-resolve": "3.0.0"
