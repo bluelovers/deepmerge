@@ -15,7 +15,7 @@ declare namespace deepmerge {
         keyValueOrMode?: boolean;
     }
     const isMergeable: (value) => boolean;
-    const SYMBOL_IS_MERGEABLE: symbol;
+    const SYMBOL_IS_MERGEABLE: unique symbol;
     const all: <T, T2 = any>(array: Partial<T2 & T>[], optionsArgument?: Options) => T2 & T;
 }
 export = deepmerge;
@@ -25,4 +25,3 @@ declare global  {
         deepmerge<T1, T2>(x: T1, y: T2, options?: deepmerge.Options): T1 & T2;
     }
 }
-export {};
