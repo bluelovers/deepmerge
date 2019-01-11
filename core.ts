@@ -1,4 +1,4 @@
-import * as isMergeableObject from 'is-mergeable-object';
+import isMergeableObject = require('is-mergeable-object');
 
 function emptyTarget(val)
 {
@@ -178,7 +178,12 @@ namespace deepmerge
 	}
 }
 
-export = deepmerge
+deepmerge.deepmerge = deepmerge;
+deepmerge.default = deepmerge;
+
+export { deepmerge }
+
+export default deepmerge
 
 declare global
 {

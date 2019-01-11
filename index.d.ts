@@ -1,6 +1,5 @@
-import * as _deepmerge from './core';
-declare const deepmerge: typeof _deepmerge & {
-    deepmerge: typeof _deepmerge;
-    default: typeof _deepmerge;
-};
+/**
+ * Created by user on 2018/2/28/028.
+ */
+import deepmerge from './core';
 export = deepmerge;
